@@ -1,0 +1,15 @@
+Fazendo a comparacao entre a atividade 1 e essa, 
+foi observado que a velocidade alterna entre as duas 
+atividades dependendo do tamanho da lista, caso o 
+tamanho da lista e o número de elementos começem a ficar 
+próximos, o exercicío 1 acaba sendo mais rápido, ja que a 
+utilização do endereçamento aberto torna o processo lento
+por ter que realizar diversos "saltos" a procura de um local
+vazio para armazenar os dados.
+
+Porém caso o tamanho da lista seje consideravelmente maior que 
+a quantidade de elementos que a lista possui, o enderecamento aberto
+acaba sendo mais eficáz, pois rapidamente o elemento encontra um local
+dispoível para ser alocado.
+
+Geanderson Lemonte V02

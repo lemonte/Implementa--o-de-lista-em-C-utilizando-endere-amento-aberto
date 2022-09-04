@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "listas.h": "c",
+    "controlador_lista.h": "c",
+    "stdio.h": "c"
+  }
+}
