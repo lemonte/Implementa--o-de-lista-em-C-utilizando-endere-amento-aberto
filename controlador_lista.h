@@ -14,12 +14,17 @@ void inicializaLista(TNo *l, int tamanho_lista)
 
 int gerarHash(int entrada, int tamanho_vetor)
 { // funcao para gerar valor hash do tipo inteiro
-	return (int)((int)(entrada) % tamanho_vetor);
+	return ((entrada) % tamanho_vetor);
 }
 
 int colisao(int entrada, int tamanho)
 {
 	return 1 + gerarHash(entrada, tamanho - 1);
+}
+
+int reHash(int entrada, int hash, int tamanho_lista)
+{
+	return gerarHash((colisao(entrada, tamanho_lista) + hash), tamanho_lista);
 }
 
 int inserirElemento()
@@ -32,15 +37,13 @@ int inserirElemento()
 void adicionarElementoNaLista(TNo *l, int tamanho_lista, int entrada)
 {
 	int hash = gerarHash(entrada, tamanho_lista);
-	int colisao_contador = 0;
 	if (l[hash].valor != -1)
 	{
 		hash = colisao(entrada, tamanho_lista);
-		colisao_contador = hash;
 	}
 	while (l[hash].valor != -1)
 	{
-		hash = gerarHash((colisao(entrada, tamanho_lista) + colisao_contador), tamanho_lista);
+		hash = reHash(entrada, hash, tamanho_lista);
 	}
 	l[hash].flag = 1;
 	l[hash].valor = entrada;
@@ -64,9 +67,7 @@ void buscarElementoNaLista(TNo *lista, int tamanho_lista)
 		printf("\n");
 		return;
 	}
-	int colisao_contador = 0;
 	hash = colisao(entrada, tamanho_lista);
-	colisao_contador = hash;
 	if (lista[hash].valor == entrada)
 	{
 		printf("\n");
@@ -85,7 +86,7 @@ void buscarElementoNaLista(TNo *lista, int tamanho_lista)
 			printf("\n");
 			return;
 		}
-		hash = gerarHash((colisao(entrada, tamanho_lista) + colisao_contador), tamanho_lista);
+		hash = reHash(entrada, hash, tamanho_lista);
 	}
 	printf("##### ELEMENTO NAO ENCONTRADO DA LISTA #######");
 	return;
@@ -112,9 +113,7 @@ void removeElementoDaLista(TNo *lista, int tamanho_lista)
 		lista[hash].valor = -1;
 		return;
 	}
-	int colisao_contador = 0;
 	hash = colisao(entrada, tamanho_lista);
-	colisao_contador = hash;
 	if (lista[hash].valor == entrada)
 	{
 		printf("\n");
@@ -139,7 +138,7 @@ void removeElementoDaLista(TNo *lista, int tamanho_lista)
 			lista[hash].valor = -1;
 			return;
 		}
-		hash = gerarHash((colisao(entrada, tamanho_lista) + colisao_contador), tamanho_lista);
+		hash = reHash(entrada, hash, tamanho_lista);
 	}
 	printf("##### ELEMENTO NAO ENCONTRADO DA LISTA #######");
 	return;

@@ -1,6 +1,10 @@
+#include <stddef.h>
+#include <time.h>
 #include "controlador_lista.h"
 
 // FUNCOES DE TELA
+
+
 void opcoesMenu()
 {
 	printf("\n ==== MENU ===== \n");
@@ -76,7 +80,7 @@ void salvarArquivo(TNo l[], int tamanho_lista)
 	// inicinalizando arquivo
 
 	FILE *newArq;
-	newArq = fopen("1kchaves.txt", "wt");
+	newArq = fopen("100kchaves.txt", "wt");
 	if (newArq == NULL) // Se não conseguiu criar o arquivo
 	{
 		printf("Problemas na CRIACAO do arquivo\n");
@@ -101,11 +105,12 @@ void salvarArquivo(TNo l[], int tamanho_lista)
 int main(int argc, const char *argv[])
 {
 	// iniciando arquivo
-
+	double start, stop, elapsed;
+	
 	FILE *arq;
 	char *result;
 	int i = 0;
-	arq = fopen("1kchaves.txt", "rt");
+	arq = fopen("100kchaves.txt", "rt");
 
 	// erro na abertura do arquivo
 	if (arq == NULL)
@@ -122,6 +127,7 @@ int main(int argc, const char *argv[])
 	l = (TNo *)malloc(tamanho_vetor * sizeof(TNo));
 	inicializaLista(l, tamanho_vetor);
 
+	start = (double)clock()/CLOCKS_PER_SEC;
 	// inserir todos os dados que deseja inserir na memória
 	while (!feof(arq))
 	{
@@ -133,9 +139,12 @@ int main(int argc, const char *argv[])
 		{
 			// printf("%d", valor_inserir);
 			adicionarElementoNaLista(l, tamanho_vetor, valor_inserir); // adicionando elemento na lista
-			printf("%d \n", valor_inserir);
+			// printf("%d \n", valor_inserir);
 		}
 	}
+	stop = (double)clock()/CLOCKS_PER_SEC;
+	elapsed = stop-start;
+	printf("Tempo gasto para carregar lista foi: %lf seconds", (double)(elapsed));
 	fclose(arq);										 // fechando o arquivo
 	menu(tamanho_vetor, l);					 // mostrando o menu
 	salvarArquivo(l, tamanho_vetor); // salvando no arquivo
